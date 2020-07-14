@@ -10,7 +10,7 @@ abstract class Transaction extends Request implements Contract
 {
     public function all(string $billCode, ?int $billPaymentStatus): Response
     {
-        $body = [ 'billCode' => $billPaymentStatus ];
+        $body = [ 'billCode' => $billCode ];
 
         // WIP: handle accepted values
         if (!\is_null($billPaymentStatus)) {
