@@ -1,9 +1,8 @@
 {
-  "name": "aimandaniel/toyyibpay-library",
-  "description": "Framework-agnostic PHP toyyibPay library (unofficial)",
-  "version": "0.1.0-dev",
+  "name": "aimandaniel/toyyibpay",
+  "description": "Framework-agnostic PHP library for toyyibPay API (unofficial)",
   "type": "library",
-  "keywords": ["php", "payment gateway"],
+  "keywords": ["php", "payment gateway", "toyyibpay"],
   "readme": "README.md",
   "license": "MIT",
   "authors": [
