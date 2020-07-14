@@ -1,0 +1,31 @@
+{
+  "name": "aimandaniel/toyyibpay-library",
+  "description": "Framework-agnostic PHP toyyibPay library (unofficial)",
+  "version": "0.1.0-dev",
+  "type": "library",
+  "keywords": ["php", "payment gateway"],
+  "readme": "README.md",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Aiman Daniel",
+      "homepage": "https://aimandaniel.com/",
+      "role": "Developer"
+    }
+  ],
+  "require" : {
+    "php" : "^7.0",
+    "php-http/guzzle6-adapter": "^2.0",
+    "laravie/codex": "^5.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "AimanDaniel\\ToyyibPay\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "AimanDaniel\\ToyyibPay\\Tests\\": "tests/"
+    }
+  }
+}
