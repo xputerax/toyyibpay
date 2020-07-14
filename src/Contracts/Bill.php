@@ -7,6 +7,26 @@ use Laravie\Codex\Contracts\Response;
 
 interface Bill extends Request
 {
+    const PRICE_DYNAMIC = 0;
+    const PRICE_FIXED = 1;
+
+    const PAYER_NONE = 0;
+    const PAYER_REQUIRED = 1;
+
+    const PAYMENT_SPLIT = 1;
+
+    const PAYMENT_CHANNEL_FPX = 0;
+    const PAYMENT_CHANNEL_CC = 1;
+    const PAYMENT_CHANNEL_BOTH = 2;
+
+    const MERCHANT_HIDE = 0;
+    const MERCHANT_DISPLAY = 1;
+
+    const CHARGE_OWNER_BOTH = null;
+    const CHARGE_FPX_CUSTOMER_CC_OWNER = 0;
+    const CHARGE_FPX_OWNER_CC_CUSTOMER = 1;
+    const CHARGE_CUSTOMER_BOTH = 2;
+
     public function create(
         string $categoryCode,
         string $billName,
