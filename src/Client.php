@@ -107,6 +107,20 @@ class Client extends \Laravie\Codex\Client
     }
 
     /**
+     * Switch to admin API endpoint
+     *
+     * @return void
+     */
+    final public function useAdminApiEndpoint()
+    {
+        return $this->useCustomApiEndpoint(
+            !$this->isUsingSandbox()
+            ? 'https://toyyibpay.com/admin/api'
+            : 'https://dev.toyyibpay.com/admin/api'
+        );
+    }
+
+    /**
      * Get Bank resource
      *
      * @param string|null $version
@@ -148,6 +162,28 @@ class Client extends \Laravie\Codex\Client
     final public function category(?string $version = null): Contracts\Category
     {
         return $this->uses('Category', $version);
+    }
+
+    /**
+     * Get Package resource
+     *
+     * @param string|null $version
+     * @return \AimanDaniel\ToyyibPay\Contracts\Package
+     */
+    final public function package(?string $version = null): Contracts\Package
+    {
+        return $this->uses('Package', $version);
+    }
+
+    /**
+     * Get Settlement resource
+     *
+     * @param string|null $version
+     * @return \AimanDaniel\ToyyibPay\Contracts\Settlement
+     */
+    final public function settlement(?string $version = null): Contracts\Settlement
+    {
+        return $this->uses('Settlement', $version);
     }
 
     /**

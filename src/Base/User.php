@@ -40,11 +40,7 @@ abstract class User extends Request implements Contract
     // WIP: handle $partnertype
     public function all(?string $partnerType): Response
     {
-        $this->client->useCustomApiEndpoint(
-            !$this->client->isUsingSandbox()
-            ? 'https://toyyibpay.com/admin/api'
-            : 'https://dev.toyyibpay.com/admin/api'
-        );
+        $this->client->useAdminApiEndpoint();
 
         return $this->send('POST', 'getAllUser', [], [
             'userSecretKey' => $this->client->getApiKey(),

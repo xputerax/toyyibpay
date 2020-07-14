@@ -122,11 +122,7 @@ abstract class Bill extends Request implements Contract
     // WIP: handle partnertype OEM|ENTERPRISE
     public function all(string $partnerType, ?string $yearMonth = null): Response
     {
-        $this->client->useCustomApiEndpoint(
-            !$this->client->isUsingSandbox()
-            ? 'https://toyyibpay.com/admin/api'
-            : 'https://dev.toyyibpay.com/admin/api'
-        );
+        $this->client->useAdminApiEndpoint();
 
         $body = [
             'userSecretKey' => $this->client->getApiKey(),
