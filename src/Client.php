@@ -19,7 +19,7 @@ class Client extends \Laravie\Codex\Client
      *
      * @var string
      */
-    protected $apiEndpoint = 'https://www.toyyibpay.com/index.php/api';
+    protected $apiEndpoint = 'https://toyyibpay.com/index.php/api';
 
     /**
      * Default API version.
@@ -36,6 +36,13 @@ class Client extends \Laravie\Codex\Client
     protected $supportedVersions = [
         'v1' => 'One',
     ];
+
+    /**
+     * Sandbox mode status
+     *
+     * @var boolean
+     */
+    protected $isUsingSandbox = false;
 
     /**
      * Construct a new Billplz Client.
@@ -64,7 +71,19 @@ class Client extends \Laravie\Codex\Client
      */
     final public function useSandbox(): self
     {
+        $this->isUsingSandbox = true;
+
         return $this->useCustomApiEndpoint('https://dev.toyyibpay.com/index.php/api');
+    }
+
+    /**
+     * Determine is using sandbox or not
+     *
+     * @return boolean
+     */
+    public function isUsingSandbox(): bool
+    {
+        return $this->isUsingSandbox;
     }
 
     /**

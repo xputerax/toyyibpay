@@ -60,5 +60,5 @@ interface Bill extends Request
 
     public function transactions(string $billCode, ?int $billpaymentStatus = 1): Response;
 
-    public function all(string $partnerType, ?string $yearMonth): Response;
+    public function all(string $partnerType, ?string $yearMonth = null): Response;
 }
