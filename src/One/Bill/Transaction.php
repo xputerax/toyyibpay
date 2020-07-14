@@ -1,6 +1,6 @@
 <?php
 
-namespace AimanDaniel\ToyyibPay\One;
+namespace AimanDaniel\ToyyibPay\One\Bill;
 
 use AimanDaniel\ToyyibPay\Base\Bill\Transaction as BaseRequest;
 

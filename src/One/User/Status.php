@@ -1,6 +1,6 @@
 <?php
 
-namespace AimanDaniel\ToyyibPay\One;
+namespace AimanDaniel\ToyyibPay\One\User;
 
 use AimanDaniel\ToyyibPay\Base\User\Status as BaseRequest;
 
