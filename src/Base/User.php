@@ -12,7 +12,6 @@ abstract class User extends Request implements Contract
     use Multipart;
 
     public function create(
-        string $enterpriseUserSecretKey,
         string $fullname,
         string $username,
         string $email,
@@ -26,7 +25,7 @@ abstract class User extends Request implements Contract
         ?int $userStatus
     ): Response {
         return $this->stream('POST', 'createAccount', [], [
-            'enterpriseUserSecretKey' => $enterpriseUserSecretKey,
+            'enterpriseUserSecretKey' => $this->client->getApiKey(),
             'fullname' => $fullname,
             'username' => $username,
             'email' => $email,

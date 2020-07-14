@@ -8,7 +8,6 @@ use Laravie\Codex\Contracts\Response;
 interface User extends Request
 {
     public function create(
-        string $enterpriseUserSecretKey,
         string $fullname,
         string $username,
         string $email,

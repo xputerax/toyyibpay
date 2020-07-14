@@ -16,6 +16,7 @@ abstract class Settlement extends Request implements Contract
         $this->client->useAdminApiEndpoint();
 
         return $this->stream('POST', 'getSettlement', [], [
+            'userSecretKey' => $this->client->getApiKey(),
             'partnerType' => $partnerType,
             'detailByuserName' => $groupByUsername
         ]);
