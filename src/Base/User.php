@@ -3,11 +3,14 @@
 namespace AimanDaniel\ToyyibPay\Base;
 
 use AimanDaniel\ToyyibPay\Contracts\User as Contract;
+use Laravie\Codex\Concerns\Request\Multipart;
 use Laravie\Codex\Contracts\Response;
 use Laravie\Codex\Request;
 
 abstract class User extends Request implements Contract
 {
+    use Multipart;
+
     public function create(
         string $enterpriseUserSecretKey,
         string $fullname,
@@ -22,7 +25,7 @@ abstract class User extends Request implements Contract
         ?int $package, // WIP: handle package & userStatus param
         ?int $userStatus
     ): Response {
-        return $this->send('POST', 'createAccount', [], [
+        return $this->stream('POST', 'createAccount', [], [
             'enterpriseUserSecretKey' => $enterpriseUserSecretKey,
             'fullname' => $fullname,
             'username' => $username,
@@ -42,7 +45,7 @@ abstract class User extends Request implements Contract
     {
         $this->client->useAdminApiEndpoint();
 
-        return $this->send('POST', 'getAllUser', [], [
+        return $this->stream('POST', 'getAllUser', [], [
             'userSecretKey' => $this->client->getApiKey(),
             'partnerType' => $partnerType ?? 'OEM',
         ]);

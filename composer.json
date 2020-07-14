@@ -16,7 +16,8 @@
   "require" : {
     "php" : "^7.0",
     "php-http/guzzle6-adapter": "^2.0",
-    "laravie/codex": "^5.2"
+    "laravie/codex": "^5.2",
+    "php-http/multipart-stream-builder": "^1.0"
   },
   "autoload": {
     "psr-4": {

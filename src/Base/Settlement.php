@@ -4,15 +4,18 @@ namespace AimanDaniel\ToyyibPay\Base;
 
 use AimanDaniel\ToyyibPay\Contracts\Settlement as Contract;
 use AimanDaniel\ToyyibPay\Request;
+use Laravie\Codex\Concerns\Request\Multipart;
 use Laravie\Codex\Contracts\Response;
 
 abstract class Settlement extends Request implements Contract
 {
+    use Multipart;
+
     public function all(string $partnerType, bool $groupByUsername): Response
     {
         $this->client->useAdminApiEndpoint();
 
-        return $this->send('POST', 'getSettlement', [], [
+        return $this->stream('POST', 'getSettlement', [], [
             'partnerType' => $partnerType,
             'detailByuserName' => $groupByUsername
         ]);
@@ -22,7 +25,7 @@ abstract class Settlement extends Request implements Contract
     {
         $this->client->useAdminApiEndpoint();
 
-        return $this->send('POST', 'getSettlementSummary', [], [
+        return $this->stream('POST', 'getSettlementSummary', [], [
             'userSecretKey' => $this->client->getApiKey(),
             'userPartnerType' => $partnerType,
             'userName' => $username,

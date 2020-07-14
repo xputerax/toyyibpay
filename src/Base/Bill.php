@@ -4,10 +4,13 @@ namespace AimanDaniel\ToyyibPay\Base;
 
 use AimanDaniel\ToyyibPay\Contracts\Bill as Contract;
 use AimanDaniel\ToyyibPay\Request;
+use Laravie\Codex\Concerns\Request\Multipart;
 use Laravie\Codex\Contracts\Response;
 
 abstract class Bill extends Request implements Contract
 {
+    use Multipart;
+
     public function create(
         string $categoryCode,
         string $billName,
@@ -28,7 +31,7 @@ abstract class Bill extends Request implements Contract
         string $billContentEmail = '',
         string $billChargeToCustomer //wip: add constants
     ): Response {
-        return $this->send('POST', 'createBill', [], [
+        return $this->stream('POST', 'createBill', [], [
             'userSecretKey' => $this->client->getApiKey(),
             'categoryCode' => $categoryCode,
             'billName' => $billName,
@@ -71,7 +74,7 @@ abstract class Bill extends Request implements Contract
         string $billDisplayMerchant,
         string $billContentEmail
     ): Response { // WIP: refactor. array_merge, compact etc
-        return $this->send('POST', 'createBillMultiPayment', [], [
+        return $this->stream('POST', 'createBillMultiPayment', [], [
             'userSecretKey' => $this->client->getApiKey(),
             'categoryCode' => $categoryCode,
             'billName' => $billName,
@@ -102,7 +105,7 @@ abstract class Bill extends Request implements Contract
         string $billpaymentPayerEmail,
         string $billBankID
     ): Response {
-        return $this->send('POST', 'runBill', [], [
+        return $this->stream('POST', 'runBill', [], [
             'userSecretKey' => $this->client->getApiKey(),
             'billCode' => $billCode,
             'billpaymentAmount' => $billpaymentAmount,
@@ -133,6 +136,6 @@ abstract class Bill extends Request implements Contract
             $body['yearMonth'] = $yearMonth;
         }
 
-        return $this->send('POST', 'getAllBill', [], $body);
+        return $this->stream('POST', 'getAllBill', [], $body);
     }
 }
