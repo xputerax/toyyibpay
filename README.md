@@ -45,7 +45,7 @@ $ composer require aimandaniel/toyyibpay-library
 ```php
 use AimanDaniel\ToyyibPay\Client;
 
-$client = Client::make('your-secret-key');
+$client = Client::make('your-secret-key', 'your-category-code');
 ```
 
 You can also pass a HTTP client directly:
@@ -205,7 +205,6 @@ $bill = $client->uses('Bill');
 
 ```php
 $response = $bill->create(
-  string $categoryCode,
   string $billName,
   string $billDescription,
   int $billPriceSetting,
@@ -214,25 +213,31 @@ $response = $bill->create(
   string $billReturnUrl,
   string $billCallbackUrl,
   string $billExternalReferenceNo,
-  string $billTo,
+  ?string $billTo,
   string $billEmail,
   string $billPhone,
-  int $billSplitPayment = 0,
-  string $billSplitPaymentArgs,
-  string $billPaymentChannel,
-  int $billDisplayMerchant = 1,
-  string $billContentEmail = '',
-  string $billChargeToCustomer
+  array $optionals = []
 );
 
 var_dump($response->toArray());
 ```
 
+```$optionals``` expects an associative array of any of these values:
+
+| Key 	| Expected Value 	| Default Value 	|
+|-	|-	|-	|
+| billSplitPayment 	| Bill::PAYMENT_SPLIT (1) <br> (empty) <br> 	| (empty) 	|
+| billSplitPaymentArgs 	| JSON String 	| (empty) 	|
+| billPaymentChannel 	| Bill::PAYMENT_CHANNEL_FPX (0) <br> Bill::PAYMENT_CHANNEL_CC (1) <br> Bill::PAYMENT_CHANNEL_BOTH (2) <br> 	| Bill::PAYMENT_CHANNEL_BOTH (2) 	|
+| billDisplayMerchant 	| Bill::MERCHANT_HIDE (0) <br> Bill::MERCHANT_DISPLAY (1) <br> 	| Bill::MERCHANT_DISPLAY (1) 	|
+| billContentEmail 	| (string) 	| (empty) 	|
+| billChargeToCustomer 	| Bill::CHARGE_OWNER_BOTH (null) <br> Bill::CHARGE_FPX_CUSTOMER_CC_OWNER (0) <br> Bill::CHARGE_FPX_OWNER_CC_CUSTOMER (1) <br> Bill::CHARGE_CUSTOMER_BOTH (2) <br> 	| Bill::CHARGE_OWNER_BOTH (null) 	|
+
+
 #### Create a multi-payment bill
 
 ```php
 $response = $bill->createMultiPayment(
-  string $categoryCode,
   string $billName,
   string $billDescription,
   string $billPriceSetting,
