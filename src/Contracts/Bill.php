@@ -28,7 +28,6 @@ interface Bill extends Request
     const CHARGE_CUSTOMER_BOTH = 2;
 
     public function create(
-        string $categoryCode,
         string $billName,
         string $billDescription,
         int $billPriceSetting,
@@ -40,16 +39,10 @@ interface Bill extends Request
         string $billTo, // nullable
         string $billEmail,
         string $billPhone,
-        int $billSplitPayment = 0, // wip: add constant
-        string $billSplitPaymentArgs, // handle json
-        string $billPaymentChannel, //Set 0 for FPX, 1 Credit Card and 2 for both FPX & Credit Card.
-        int $billDisplayMerchant = 1,
-        string $billContentEmail = '',
-        string $billChargeToCustomer //wip: add/use constants
+        array $optionals = []
     ): Response;
 
     public function createMultiPayment(
-        string $categoryCode,
         string $billName,
         string $billDescription,
         string $billPriceSetting,

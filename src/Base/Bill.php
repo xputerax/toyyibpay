@@ -5,14 +5,13 @@ namespace AimanDaniel\ToyyibPay\Base;
 use AimanDaniel\ToyyibPay\Contracts\Bill as Contract;
 use AimanDaniel\ToyyibPay\Request;
 use Laravie\Codex\Concerns\Request\Multipart;
-use Laravie\Codex\Contracts\Response;
+use Laravie\Codex\Contracts\Response as ResponseContract;
 
 abstract class Bill extends Request implements Contract
 {
     use Multipart;
 
     public function create(
-        string $categoryCode,
         string $billName,
         string $billDescription,
         int $billPriceSetting,
@@ -21,19 +20,34 @@ abstract class Bill extends Request implements Contract
         string $billReturnUrl,
         string $billCallbackUrl,
         string $billExternalReferenceNo,
-        string $billTo, // nullable
+        ?string $billTo, // nullable
         string $billEmail,
         string $billPhone,
-        int $billSplitPayment = 0, // wip: add constant
-        string $billSplitPaymentArgs, // handle json
-        string $billPaymentChannel, //Set 0 for FPX, 1 Credit Card and 2 for both FPX & Credit Card.
-        int $billDisplayMerchant = 1,
-        string $billContentEmail = '',
-        string $billChargeToCustomer //wip: add constants
-    ): Response {
-        return $this->stream('POST', 'createBill', [], [
+        array $optional = []
+    ): ResponseContract {
+        $extras = [
+            'billSplitPayment' => (isset($optional['billSplitPayment']) && $optional['billSplitPayment'] == Bill::PAYMENT_SPLIT)
+                ? Bill::PAYMENT_SPLIT
+                : '',
+
+            // WIP" handle json
+            'billSplitPaymentArgs' => $optional['billSplitPaymentArgs'] ?? '',
+
+            //Set 0 for FPX, 1 Credit Card and 2 for both FPX & Credit Card.
+            'billPaymentChannel' => $optional['billPaymentChannel'] ?? Bill::PAYMENT_CHANNEL_BOTH,
+
+            //1,
+            'billDisplayMerchant' => $optional['billDisplayMerchant'] ?? Bill::MERCHANT_DISPLAY,
+
+            'billContentEmail' => $optional['billContentEmail'] ?? '',
+
+            //wip: add/use constants
+            'billChargeToCustomer' => $optional['billChargeToCustomer'] ?? Bill::CHARGE_OWNER_BOTH,
+        ];
+
+        $data = array_merge([
             'userSecretKey' => $this->client->getApiKey(),
-            'categoryCode' => $categoryCode,
+            'categoryCode' => $this->client->getCategoryCode(),
             'billName' => $billName,
             'billDescription' => $billDescription,
             'billPriceSetting' => $billPriceSetting,
@@ -44,18 +58,13 @@ abstract class Bill extends Request implements Contract
             'billExternalReferenceNo' => $billExternalReferenceNo,
             'billTo' => $billTo,
             'billEmail' => $billEmail,
-            'billPhone' => $billPhone,
-            'billSplitPayment' => $billSplitPayment,
-            'billSplitPaymentArgs' => $billSplitPaymentArgs,
-            'billPaymentChannel' => $billPaymentChannel,
-            'billDisplayMerchant' => $billDisplayMerchant,
-            'billContentEmail' => $billContentEmail,
-            'billChargeToCustomer' => $billChargeToCustomer,
-        ]);
+            'billPhone' => $billPhone
+        ], $extras);
+
+        return $this->stream('POST', 'createBill', [], $data);
     }
 
     public function createMultiPayment(
-        string $categoryCode,
         string $billName,
         string $billDescription,
         string $billPriceSetting,
@@ -73,10 +82,10 @@ abstract class Bill extends Request implements Contract
         string $billPaymentChannel,
         string $billDisplayMerchant,
         string $billContentEmail
-    ): Response { // WIP: refactor. array_merge, compact etc
+    ): ResponseContract { // WIP: refactor. array_merge, compact etc
         return $this->stream('POST', 'createBillMultiPayment', [], [
             'userSecretKey' => $this->client->getApiKey(),
-            'categoryCode' => $categoryCode,
+            'categoryCode' => $this->client->getCategoryCode(),
             'billName' => $billName,
             'billDescription' => $billDescription,
             'billPriceSetting' => $billPriceSetting,
@@ -104,7 +113,7 @@ abstract class Bill extends Request implements Contract
         string $billpaymentPayerPhone,
         string $billpaymentPayerEmail,
         string $billBankID
-    ): Response {
+    ): ResponseContract {
         return $this->stream('POST', 'runBill', [], [
             'userSecretKey' => $this->client->getApiKey(),
             'billCode' => $billCode,
@@ -117,13 +126,13 @@ abstract class Bill extends Request implements Contract
     }
 
     // WIP: handle billpaymentStatus
-    public function transactions(string $billCode, ?int $billpaymentStatus = 1): Response
+    public function transactions(string $billCode, ?int $billpaymentStatus = 1): ResponseContract
     {
         return $this->client->uses('Bill.Transaction')->all($billCode, $billpaymentStatus);
     }
 
     // WIP: handle partnertype OEM|ENTERPRISE
-    public function all(string $partnerType, ?string $yearMonth = null): Response
+    public function all(string $partnerType, ?string $yearMonth = null): ResponseContract
     {
         $this->client->useAdminApiEndpoint();
 
