@@ -15,6 +15,13 @@ class Client extends \Laravie\Codex\Client
     protected $apiKey;
 
     /**
+     * ToyyibPay category code
+     *
+     * @var string
+     */
+    protected $categoryCode;
+
+    /**
      * ToyyibPay API endpoint.
      *
      * @var string
@@ -47,11 +54,11 @@ class Client extends \Laravie\Codex\Client
     /**
      * Construct a new Billplz Client.
      */
-    public function __construct(HttpClient $http, string $apiKey)
+    public function __construct(HttpClient $http, string $apiKey, string $categoryCode)
     {
         $this->http = $http;
-
         $this->setApiKey($apiKey);
+        $this->setCategoryCode($categoryCode);
     }
 
     /**
@@ -59,9 +66,9 @@ class Client extends \Laravie\Codex\Client
      *
      * @return $this
      */
-    public static function make(string $apiKey)
+    public static function make(string $apiKey, string $categoryCode)
     {
-        return new static(Discovery::client(), $apiKey);
+        return new static(Discovery::client(), $apiKey, $categoryCode);
     }
 
     /**
@@ -102,6 +109,29 @@ class Client extends \Laravie\Codex\Client
     final public function setApiKey(string $apiKey): self
     {
         $this->apiKey = $apiKey;
+
+        return $this;
+    }
+
+    /**
+     * Get the category code
+     *
+     * @return string
+     */
+    final public function getCategoryCode(): string
+    {
+        return $this->categoryCode;
+    }
+
+    /**
+     * Set category code
+     *
+     * @param string $categoryCode
+     * @return self
+     */
+    final public function setCategoryCode(string $categoryCode): self
+    {
+        $this->categoryCode = $categoryCode;
 
         return $this;
     }
