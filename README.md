@@ -55,7 +55,7 @@ use AimanDaniel\ToyyibPay\Client;
 
 $http = Laravie\Codex\Discovery::client();
 
-$client = new Client($http, 'your-secret-key');
+$client = new Client($http, 'your-secret-key', 'your-category-code');
 ```
 
 ### Using sandbox mode
