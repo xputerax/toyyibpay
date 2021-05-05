@@ -35,7 +35,7 @@ Unofficial PHP library for toyyibPay payment gateway. This package is heavily in
 ## Installation
 
 ```
-$ composer require aimandaniel/toyyibpay-library
+$ composer require aimandaniel/toyyibpay
 ```
 
 ## Getting started
