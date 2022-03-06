@@ -27,5 +27,8 @@
     "psr-4": {
       "AimanDaniel\\ToyyibPay\\Tests\\": "tests/"
     }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9"
   }
 }
