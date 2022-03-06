@@ -1,14 +1,11 @@
 <?php
 
 use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use AimanDaniel\ToyyibPay\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Client as HttpClient;
-use GuzzleHttp\Exception\RequestException;
-
 class CategoryTest extends TestCase
 {
     private $apiKey;

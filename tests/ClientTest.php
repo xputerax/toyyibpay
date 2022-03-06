@@ -18,9 +18,7 @@ class ClientTest extends TestCase
 
     public function testClientExisted()
     {
-        global $apiKey, $categoryCode;
-
-        $client = Client::make($apiKey, $categoryCode);
+        $client = Client::make($this->apiKey, $this->categoryCode);
 
         $this->assertSame($apiKey, $client->getApiKey());
         $this->assertInstanceOf(Client::class, $client);
